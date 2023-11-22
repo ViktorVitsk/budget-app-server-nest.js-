@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '@src/user/user.service';
 import * as argon2 from 'argon2';
 
@@ -12,6 +12,6 @@ export class AuthService {
     if (user && passwordIsMatch) {
       return user;
     }
-    return new BadRequestException('User or password are incorrect');
+    return new UnauthorizedException('User or password are incorrect');
   }
 }
