@@ -28,8 +28,15 @@ export class CategoryService {
     return await this.categoryRepository.save(newCategory);
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAll(id: number) {
+    return await this.categoryRepository.find({
+      where: {
+        user: { id },
+      },
+      relations: {
+        transactions: true,
+      },
+    });
   }
 
   findOne(id: number) {
