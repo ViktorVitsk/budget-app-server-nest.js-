@@ -34,6 +34,7 @@ export class CategoryController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(+id);
   }
