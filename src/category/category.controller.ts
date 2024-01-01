@@ -40,6 +40,7 @@ export class CategoryController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
