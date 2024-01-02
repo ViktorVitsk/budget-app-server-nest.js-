@@ -4,7 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '@src/user/entities/user.entity';
@@ -12,7 +12,7 @@ import { Category } from '@src/category/entities/category.entity';
 
 @Entity()
 export class Transaction {
-  @PrimaryColumn({ name: 'transaction_id' })
+  @PrimaryGeneratedColumn({ name: 'transaction_id' })
   id: number;
 
   @Column()
