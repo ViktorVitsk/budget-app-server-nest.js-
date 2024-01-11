@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,8 +43,18 @@ export class TransactionService {
     return transactions;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} transaction`;
+  async findOne(id: number) {
+    const transaction = await this.transactionRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        user: true,
+        category: true,
+      },
+    });
+    if (!transaction) throw new NotFoundException('Transaction not found');
+    return transaction;
   }
 
   update(id: number, updateTransactionDto: UpdateTransactionDto) {
