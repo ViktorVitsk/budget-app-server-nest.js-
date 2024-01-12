@@ -40,6 +40,7 @@ export class TransactionController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('id') id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,

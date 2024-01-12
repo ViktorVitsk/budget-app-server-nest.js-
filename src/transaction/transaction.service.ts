@@ -32,7 +32,7 @@ export class TransactionService {
   }
 
   async findAll(id: number) {
-    const transactions = await this.transactionRepository.find({
+    return await this.transactionRepository.find({
       where: {
         user: { id },
       },
@@ -40,7 +40,6 @@ export class TransactionService {
         createdAt: 'DESC',
       },
     });
-    return transactions;
   }
 
   async findOne(id: number) {
@@ -57,8 +56,14 @@ export class TransactionService {
     return transaction;
   }
 
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
+  async update(id: number, updateTransactionDto: UpdateTransactionDto) {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id },
+    });
+
+    if (!transaction) throw new NotFoundException('Transaction not found');
+
+    return await this.transactionRepository.update(id, updateTransactionDto);
   }
 
   remove(id: number) {
