@@ -49,6 +49,7 @@ export class TransactionController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.transactionService.remove(+id);
   }

@@ -66,7 +66,13 @@ export class TransactionService {
     return await this.transactionRepository.update(id, updateTransactionDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+  async remove(id: number) {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id },
+    });
+
+    if (!transaction) throw new NotFoundException('Transaction  not found');
+
+    return await this.transactionRepository.delete(id);
   }
 }
